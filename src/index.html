@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="./output.css" rel="stylesheet">
+  <link href="./styles.css" rel="stylesheet">
+  
+</head>
+
+<body class="">
+	<div>
+		
+	</div>
+	<div class="container place-content-center">
+		<div class="flipbook -translate-x-10 sm:translate-x-[-45px] ">
+		  <div class="object-cover">
+			<img src="images/cover.jpg" alt="" />
+		  </div>
+		  <div class="hard"></div>
+		  <div>
+			<small>Lets Look At Some Amazing Pokemon ❤️</small>
+			<small>Gotta Catch 'Em All</small>
+		  </div>
+		  <div>
+			<img src="images/img-1.png" alt="" />
+			<small> Charmandar </small>
+		  </div>
+		  <div>
+			<img src="images/img-2.png" alt="" />
+			<small> Arbok </small>
+		  </div>
+		  <div>
+			<img src="images/img-3.png" alt="" />
+			<small> Pikachu </small>
+		  </div>
+		  <div>
+			<img src="images/img-4.png" alt="" />
+			<small> Mew </small>
+		  </div>
+		  <div>
+			<img src="images/img-5.png" alt="" />
+			<small> Darkrai </small>
+		  </div>
+		  <div class="hard"></div>
+		  <div class="hard">Thank You <small>~ HankTheTank</small></div>
+		</div>
+	</div>
+
+  <script src="jquery.js"></script>
+  <script src="turn.js"></script>
+  <script>
+    $(".flipbook").turn({
+		width: 400,
+		height: 300,
+		autoCenter: true
+	});
+	
+
+	$('.flipbook').bind("turning", (e,p,v) => {
+		console.log(p)
+		if(p === 1) {
+
+			$('.flipbook').addClass("-translate-x-10 ")
+		} else {
+			$('.flipbook').removeClass("-translate-x-10")
+		}
+	});
+	
+  </script>
+</body>
+
+</html>
