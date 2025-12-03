@@ -10,11 +10,17 @@
 
 <body class="">
 	<div id="step1" class="w-full h-screen flex justify-center items-center">
-		<div class="glass py-3 px-4 w-72 ">
-			<h1 id="dialog1" class="text-white text-center text-sm font-medium "></h1>
+		<div id="dialog1" class="hidden glass py-3 px-4 w-72 fade-box ">
+			<h1 id="text1" class="text-white text-center text-sm font-medium "></h1>
 			<div id="option1" class=" justify-center gap-2 text-white mt-4 hidden opacity-0 transition-opacity duration-500">
 				<button id="button1" class="text-md font-medium button px-3 rounded-2xl">Iya</button>
 				<button id="button2" class="  text-md font-medium button px-3 rounded-2xl">Bukan</button>
+			</div>
+		</div>
+		<div id="dialog2" class=" glass py-3 px-4 w-72 fade-box">
+			<h1 id="text2" class="text-white text-center text-sm font-medium "></h1>
+			<div id="option2" class=" gap-2 text-white mt-4 flex opacity-100 transition-opacity duration-500">
+				<div class="p-2 bg-red-500 font-medium rounded-2xl">1</div>
 			</div>
 		</div>
 	</div>
@@ -54,23 +60,59 @@
 
 	//Step 1
 	let step = 1;
-        const content = "Halo... boleh pastiin sebentar? Kamu yang namanya Someone, kan?";
-  let i = 0;
-	function type() {
-		if (i < content.length) {
-		$('#dialog1').text( $('#dialog1').text() + content.charAt(i) );
-		i++;
-		setTimeout(type, 30); 
-		} else {
-		$('#option1').removeClass("hidden")
-		$('#option1').addClass("flex")
-		setTimeout(() => {
-			$('#option1').removeClass("opacity-0"); 
-		}, 10);
-		}
-	}
+      const content = [
+  "Halo... boleh pastiin sebentar? Kamu yang namanya Someone, kan?",
+  "Ini beneran kamu kah? Coba masukkan PIN yang aku kasih tadi, aku cuman mau mastiin kalo ini beneran kamu."
+];
 
-  type();
+let indexProgress = {}; // simpan progress tiap id
+
+function type(id, time = 10) {
+  if (!indexProgress[id]) indexProgress[id] = 0;
+
+  const i = indexProgress[id];
+  const text = content[id - 1];
+
+  if (i < text.length) {
+    $(`#text${id}`).text($(`#text${id}`).text() + text.charAt(i));
+    indexProgress[id]++;
+
+    setTimeout(() => type(id), 30);
+  } else {
+    // selesai ngetik
+    $(`#option${id}`).removeClass("hidden").addClass("flex");
+
+    setTimeout(() => {
+      $(`#option${id}`).removeClass("opacity-0");
+    }, time);
+  }
+}
+
+  type(1);
+
+  $("#option1 #button1").on("click", () => {
+    dialog = 2;
+    fadeOut("#dialog1")
+  setTimeout(() => {
+    fadeIn("#dialog2")
+	type(2)
+  }, 1000)
+  })
+
+  function fadeOut(el) {
+    $(el).addClass("fade-out");
+
+  $(el).on("transitionend", () => {
+    $(el).css("display", "none")
+  });
+  }
+  
+  function fadeIn(el) {
+    $(el).removeClass("hidden")
+      setTimeout(() => {
+  $(el).removeClass("opacity-0"); 
+}, 10);
+  }
 
 	//Step 2
     $(".flipbook").turn({
