@@ -9,10 +9,16 @@
 </head>
 
 <body class="">
-	<div id="step1" class="">
-		<h1></h1>
+	<div id="step1" class="w-full h-screen flex justify-center items-center">
+		<div class="glass py-3 px-4 w-72 ">
+			<h1 id="dialog1" class="text-white text-center text-sm font-medium "></h1>
+			<div id="option1" class=" justify-center gap-2 text-white mt-4 hidden opacity-0 transition-opacity duration-500">
+				<button id="button1" class="text-md font-medium button px-3 rounded-2xl">Iya</button>
+				<button id="button2" class="  text-md font-medium button px-3 rounded-2xl">Bukan</button>
+			</div>
+		</div>
 	</div>
-	<div id="step2" class="container place-content-center">
+	<div id="step2" class="hidden container place-content-center">
 		<div class="flipbook -translate-x-10 sm:translate-x-[-45px] ">
 		  <div class="object-cover">
 			<img src="images/cover.jpg" alt="" />
@@ -45,6 +51,28 @@
   <script src="jquery.js"></script>
   <script src="turn.js"></script>
   <script>
+
+	//Step 1
+	let step = 1;
+        const content = "Halo... boleh pastiin sebentar? Kamu yang namanya Someone, kan?";
+  let i = 0;
+	function type() {
+		if (i < content.length) {
+		$('#dialog1').text( $('#dialog1').text() + content.charAt(i) );
+		i++;
+		setTimeout(type, 30); 
+		} else {
+		$('#option1').removeClass("hidden")
+		$('#option1').addClass("flex")
+		setTimeout(() => {
+			$('#option1').removeClass("opacity-0"); 
+		}, 10);
+		}
+	}
+
+  type();
+
+	//Step 2
     $(".flipbook").turn({
 		width: 400,
 		height: 300,
@@ -61,6 +89,7 @@
 			$('.flipbook').removeClass("-translate-x-10")
 		}
 	});
+
 	
   </script>
 </body>
